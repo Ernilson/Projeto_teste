@@ -1,17 +1,21 @@
 package br.com.kafka;
 
 import java.util.List;
-import java.util.Optional;
 
-import org.junit.jupiter.api.Test;
+import org.junit.Test;
+import org.junit.runner.RunWith;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
+import org.springframework.test.context.TestPropertySource;
+import org.springframework.test.context.junit4.SpringRunner;
 
 import br.com.kafka.Model.Cadastro;
 import br.com.kafka.Repository.CadastroRepository;
 import br.com.kafka.ServeceImplents.CadastroServiceImplements;
 
-@SpringBootTest
+@RunWith(SpringRunner.class)
+@SpringBootTest(classes = ProjetoTesteApplication.class)
+@TestPropertySource(locations = "classpath:application.properties" )
 class ProjetoTesteApplicationTests {
 	
 	@Autowired
@@ -19,6 +23,11 @@ class ProjetoTesteApplicationTests {
 	
 	@Autowired
 	private CadastroServiceImplements csi;
+	
+	@Test
+	public void contextLoads() {
+		
+	}
 	
 //	@Test
 //	void salvaCadastro() {
@@ -45,14 +54,14 @@ class ProjetoTesteApplicationTests {
 //	}
 	
 	//Metodo para Listar todos do cadastro
-//   @Test
-//   public void listar () {	   
-//       List <Cadastro> cad = csi.listAll();
-//       System.out.println ("Total de Registros" + cad.size ());
-//       for (Cadastro c: cad) {
-//           System.out.println (c.getEndereco() + "-" + c.getNome());
-//       }       
-//   }
+   @Test
+   public void listar () {	   
+       List <Cadastro> cad = csi.listAll();
+       System.out.println ("Total de Registros" + cad.size ());
+       for (Cadastro c: cad) {
+           System.out.println (c.getEndereco() + "-" + c.getNome());
+       }       
+   }
    
    //Metodo para Bucar por id
 //   @Test
