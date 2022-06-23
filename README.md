@@ -13,7 +13,7 @@ Renomear container
 docker rename adoring_ardinghelli servidor-teste
 ----------------------------------------------------------------
 Para Remover container
-docker rm nome do container ou Id (após para o container) senão docker rm -f (para força)
+docker rm nome do container ou Id (após para o container) senão docker rm -f (para forçar)
 ----------------------------------------------------------------
 Para Remover imagem
 docker rmi e o Id da imagem
@@ -49,18 +49,13 @@ psql -h localhost -p 5432 -U postgres
 //comando que para todos os serviços do docker
 docker system prune 
 
-//comando para criar imagem 
-mvn spring-boot:build-image
-docker build -t app .
+-----------------------------procedimento para criar uma imagem atacha ao banco-------------------------------------
 
 // Comando para renomear e direcionar a porta na imagem mysql (já baixada) ao criar o container - caso não tenha (docker pull mysql)
-docker run -p -d 3308:3306 --name db -e MYSQL_ROOT_PASSOWRD=root -e MYSQL_DATABASE=teste45 mysql
+docker run -p 3308:3306 --name db -e MYSQL_ROOT_PASSOWRD=root -e MYSQL_DATABASE=teste45 mysql
 
-//comando para por aplicação num cona
-docker run -p 9090:8080 --name app -e MYSQL_HOST=db -e MYSQL_USER=root -e MYSQL_PASSWORD=root -e MYSQL_PORT=3306 app
-
-//comando para rodar a aplicação na mesma rede que mysql
-docker run -p 9090:8080 --name app --net segundo-network -e MYSQL_HOST=db -e MYSQL_USER=root -e MYSQL_PASSWORD=root -e MYSQL_PORT=3306 app  
+//comando para criar imagem 
+docker build -t app .
 
 //Comando para criar uma network(rede) personalizada
  docker network create spring-network
@@ -74,10 +69,12 @@ docker network ls
 //Comando para inspecionar o container
 docker container inspect db
 
-//Comando para conectar na rede o mysql
-docker network connect segundo-network db
+//comando para rodar a aplicação na mesma rede que mysql
+docker run -p 9090:8080 --name app --net segundo-network -e MYSQL_HOST=db -e MYSQL_USER=root -e MYSQL_PASSWORD=root -e MYSQL_PORT=3306 app  
 
---------------------------------------como enviar docker images para o dockerhub --------------------------------------------
+
+------------------como enviar docker images para o dockerhub --------------------------------------------
+
 https://www.youtube.com/watch?v=x1PlJRYIr0I
 
 docker run --name containerPostgres -e POSTGRES_PASSWORD=admin123 -p 5432:5433 -d postgres
