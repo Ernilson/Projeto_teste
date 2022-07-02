@@ -3,24 +3,34 @@ services:
   db:
     image: mysql:5.7.22
     command: mysql --default_authentication_plugin=myslq_native_password
+    restart: always
     environment:
-        TZ: America/São_Paulo
+        TZ: America/Sao_Paulo
         MSQL_ROOT_PASSWORD: root
         MSQL_ROOT_USER: root
         MSQL_PASSWORD: root
-        MSQL_DATABASE: teste10
+        MSQL_DATABASE: dbubuntu
     ports:
-       - "3307:3306"
-  projeto_teste:
+       - "3308:3306"
+    networks:
+       - outron    
+  projeto-teste:
     image: projeto_teste
+    restart: always
+    build:
+      ./
+    working_dir: /projeto_teste
     environment:
         TZ: America/Sao_Paulo
         MYSQL_ROOT_PASSWORD: root
         MYSQL_USER: root
         MYSQL_PASSWORD: root
-        MYSQL_DATABASE: teste10
+        MYSQL_DATABASE: dbubuntu
     ports:
-       - 80:80
+       - 8080:8080
+    command: mvn spring-boot:run
     depends_on:
-       - db
-      
+       - db    
+networks:
+    outron:
+        driver: brigde
